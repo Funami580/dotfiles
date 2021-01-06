@@ -1,4 +1,5 @@
 local native_langs = {"de", "deu", "ger"}
+local native_lang_strings = {"deutsch", "german"}
 local audio_langs = {"de", "deu", "ger", "ja", "jp", "jpn", "en", "eng", "enUS"}
 local sub_langs = {"de", "deu", "ger", "en", "eng", "enUS"}
 local audio_codecs = {"dtshd", "dts", "truehd", "pcm", "flac", "wav", "wv", "ape", "tta", "shn"}
@@ -13,6 +14,7 @@ function best_audio()
     
     for _, track in pairs(tracktable) do
         if track.type == "audio" then
+            local title = track["title"]
             local lang = track["lang"]
             local codec = track["codec"]
             local visual_impaired = track["visual-impaired"]
@@ -37,6 +39,16 @@ function best_audio()
                         
                         if lang_index_base == nil and audio_lang == best_audio_track["lang"] then
                             lang_index_base = audio_index
+                        end
+                    end
+                    
+                    for audio_index, audio_lang in pairs(native_lang_strings) do
+                        if string.match(string.lower(title), audio_lang) ~= nil then
+                            lang_index_loop = 0
+                        end
+                    
+                        if string.match(string.lower(best_audio_track["title"]), audio_lang) ~= nil then
+                            lang_index_base = 0
                         end
                     end
                     
@@ -102,6 +114,13 @@ function best_sub(audio_track)
         end
     end
     
+    for _, audio_lang in pairs(native_lang_strings) do
+        if string.match(string.lower(audio_track["title"]), audio_lang) ~= nil then
+            audio_native = true
+            break
+        end
+    end
+    
     local tracktable = mp.get_property_native("track-list", {})
     local best_subtitle_track = nil
     local best_subtitle_tracks = {}
@@ -155,8 +174,8 @@ function best_sub(audio_track)
                             loop_title = ""
                         end
                         
-                        base_forced = best_subtitle_track["forced"] or string.find(string.lower(base_title), forced_key)
-                        loop_forced = forced or string.find(string.lower(loop_title), forced_key)
+                        base_forced = best_subtitle_track["forced"] or (string.match(string.lower(base_title), forced_key) ~= nil)
+                        loop_forced = forced or (string.match(string.lower(loop_title), forced_key) ~= nil)
                         
                         if should_forced == loop_forced and should_forced ~= base_forced then
                             best_subtitle_track = track
