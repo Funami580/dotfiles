@@ -1,0 +1,5 @@
+# Best quality
+-f bestvideo+bestaudio/best
+
+# Better output naming
+-o "%(title)s [%(id)s].%(ext)s"
