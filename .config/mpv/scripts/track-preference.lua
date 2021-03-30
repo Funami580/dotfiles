@@ -115,7 +115,7 @@ function best_sub(audio_track)
     end
     
     for _, audio_lang in pairs(native_lang_strings) do
-        if string.match(string.lower(audio_track["title"]), audio_lang) ~= nil then
+        if audio_track["title"] ~= nil and string.match(string.lower(audio_track["title"]), audio_lang) ~= nil then
             audio_native = true
             break
         end
