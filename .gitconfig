@@ -2,6 +2,12 @@
     editor = nano
     pager = delta
 
+[init]
+    defaultBranch = main
+
+[alias]
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+
 [delta]
     features = side-by-side line-numbers decorations
     syntax-theme = Dracula
