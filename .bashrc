@@ -6,7 +6,9 @@
 [[ $- != *i* ]] && return
 
 PS1='[\u@\h \W]\$ '
+
 export PATH=$PATH:~/.cargo/bin/
+export BAT_PAGER="less -iFx4 --mouse --wheel-lines=4"
 
 alias lsx='exa -lbh --group-directories-first'
 
