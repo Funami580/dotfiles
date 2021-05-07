@@ -14,6 +14,10 @@ function split(inputstr, sep)
     return t
 end
 
+function startswith(inputstr, prefix)
+   return inputstr:sub(1, string.len(prefix)) == prefix
+end
+
 function endswith(inputstr, suffix)
     return inputstr:sub(-string.len(suffix)) == suffix
 end
@@ -23,7 +27,7 @@ function get_profiles()
     local user_profiles = {}
     
     for i, v in ipairs(profiles) do
-        if v["profile-desc"] ~= nil then
+        if v["name"] == "enc-to-hp-slate-7" then
             break
         end
         
@@ -35,7 +39,7 @@ end
 
 local profiles = get_profiles()
 local profiles_len = #profiles
-local curr_profile = profiles[1]
+local curr_profile = profiles[1]  -- TODO: find curr_profile / currently: last profile defined in mpv.conf
 
 function unload_profile(name)
     local profile_list = mp.get_property_native("profile-list")
@@ -61,7 +65,28 @@ function unload_profile(name)
                     end
                     
                     if endswith(key, "-set") or endswith(key, "-append") or endswith(key, "-add") or endswith(key, "-pre") or endswith(key, "-remove") or endswith(key, "-del") or endswith(key, "-toggle") then
-                        msg.error("Couldn't process list command: "..key) -- TODO: Can somebody help me with this / how to execute demuxer-lavf-o-toggle=fflags=+nobuffer via lua?
+                        if startswith(key, "vf-") or startswith(key, "af-") then
+                            local split_key = split(key, "-")
+                            local key_first = split_key[1]
+                            
+                            table.remove(split_key, 1)
+                            
+                            local key_second = table.concat(split_key, "-")
+                            
+                            if key_second == "append" or key_second == "add" or key_second == "pre" then
+                                key_second = "remove"
+                            elseif key_second == "remove" then
+                                key_second = "append"
+                            elseif key_second == "toggle" then
+                                -- change nothing here
+                            else
+                                msg.error("Couldn't process list command: "..key) -- TODO: -del and -clr not implemented
+                            end
+                            
+                            mp.command("no-osd "..key_first.." "..key_second.." "..val)
+                        else
+                            msg.error("Couldn't process list command: "..key) -- TODO: Can somebody help me with this / how to execute demuxer-lavf-o-toggle=fflags=+nobuffer via lua?
+                        end
                     elseif default == nil or default == "" then
                         msg.error("Empty default value for "..key)
                     else
