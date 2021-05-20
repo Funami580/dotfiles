@@ -22,7 +22,18 @@ function endswith(inputstr, suffix)
     return inputstr:sub(-string.len(suffix)) == suffix
 end
 
-function get_profiles()
+function get_all_profiles()
+    local all_profiles = mp.get_property_native("profile-list")
+    local profiles = {}
+    
+    for i, v in ipairs(all_profiles) do
+        table.insert(profiles, v["name"])
+    end
+    
+    return profiles
+end
+
+function get_custom_profiles()
     local profiles = mp.get_property_native("profile-list")
     local user_profiles = {}
     
@@ -37,11 +48,13 @@ function get_profiles()
     return user_profiles
 end
 
-local profiles = get_profiles()
+local all_profiles = get_all_profiles()
+local profiles = get_custom_profiles()
 local profiles_len = #profiles
-local curr_profile = profiles[1]  -- TODO: find curr_profile / currently: last profile defined in mpv.conf
+local curr_profile = profiles[1]  -- currently: last profile defined in mpv.conf
+local first_time = true
 
-function unload_profile(name)
+function unload_profile(name, reverse_unload)
     local profile_list = mp.get_property_native("profile-list")
     local sub_profiles = {}
     
@@ -99,8 +112,12 @@ function unload_profile(name)
         end
     end
     
+    if not reverse_unload then
+        return
+    end
+    
     for _, sub_profile in pairs(sub_profiles) do
-        unload_profile(sub_profile)
+        unload_profile(sub_profile, true)
     end
 end
 
@@ -133,7 +150,19 @@ function load_next_profile(reversed)
         next_index = 1
     end
     
-    unload_profile(curr_profile)
+    if first_time then
+        first_time = false
+        
+        for _, profile in ipairs(all_profiles) do
+            -- Skip encoding profiles for better performance
+            if profile ~= "encoding" and not startswith(profile, "enc-") then
+                unload_profile(profile, false)
+            end
+        end
+    else
+        unload_profile(curr_profile, true)
+    end
+    
     local next_profile = profiles[next_index]
     
     mp.commandv("apply-profile", next_profile)
