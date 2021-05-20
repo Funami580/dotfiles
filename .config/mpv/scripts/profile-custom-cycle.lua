@@ -83,14 +83,14 @@ function unload_profile(name)
                                 msg.error("Couldn't process list command: "..key) -- TODO: -del and -clr not implemented
                             end
                             
-                            mp.command("no-osd "..key_first.." "..key_second.." "..val)
+                            mp.commandv("no-osd", key_first, key_second, val)
                         else
                             msg.error("Couldn't process list command: "..key) -- TODO: Can somebody help me with this / how to execute demuxer-lavf-o-toggle=fflags=+nobuffer via lua?
                         end
                     elseif default == nil or default == "" then
                         msg.error("Empty default value for "..key)
                     else
-                        mp.command("no-osd set "..key.." "..default)
+                        mp.commandv("no-osd", "set", key, default)
                     end
                 end
             end
@@ -136,8 +136,8 @@ function load_next_profile(reversed)
     unload_profile(curr_profile)
     local next_profile = profiles[next_index]
     
-    mp.command("apply-profile " .. next_profile)
-    mp.command("show-text \"Profile: " .. next_profile .. "\"")
+    mp.commandv("apply-profile", next_profile)
+    mp.commandv("show-text", "Profile: " .. next_profile)
     
     curr_profile = next_profile
 end

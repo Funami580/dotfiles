@@ -202,9 +202,7 @@ function best_sub(audio_track)
     return best_subtitle_track
 end
 
-local silent = true
-
-function choose_best_tracks()
+function choose_best_tracks(silent)
     local audio = best_audio()
     local subtitle = best_sub(audio)
     
@@ -219,9 +217,15 @@ function choose_best_tracks()
     if not silent then
         mp.command("show-text \"Checked tracks\"")
     end
-    
-    silent = false
 end
 
-mp.register_event("file-loaded", choose_best_tracks)
-mp.add_key_binding("SHARP", "choose-best-tracks", choose_best_tracks)
+function choose_best_tracks_silent()
+    choose_best_tracks(true)
+end
+
+function choose_best_tracks_non_silent()
+    choose_best_tracks(false)
+end
+
+mp.register_event("file-loaded", choose_best_tracks_silent)
+mp.add_key_binding("SHARP", "choose-best-tracks", choose_best_tracks_non_silent)
