@@ -22,11 +22,12 @@ function endswith(inputstr, suffix)
     return inputstr:sub(-string.len(suffix)) == suffix
 end
 
+local profile_list = mp.get_property_native("profile-list")
+
 function get_all_profiles()
-    local all_profiles = mp.get_property_native("profile-list")
     local profiles = {}
     
-    for i, v in ipairs(all_profiles) do
+    for i, v in ipairs(profile_list) do
         table.insert(profiles, v["name"])
     end
     
@@ -34,10 +35,9 @@ function get_all_profiles()
 end
 
 function get_custom_profiles()
-    local profiles = mp.get_property_native("profile-list")
     local user_profiles = {}
     
-    for i, v in ipairs(profiles) do
+    for i, v in ipairs(profile_list) do
         if v["name"] == "enc-to-hp-slate-7" then
             break
         end
@@ -47,7 +47,6 @@ function get_custom_profiles()
     
     return user_profiles
 end
-
 local all_profiles = get_all_profiles()
 local profiles = get_custom_profiles()
 local profiles_len = #profiles
@@ -55,7 +54,6 @@ local curr_profile = profiles[1]  -- currently: last profile defined in mpv.conf
 local first_time = true
 
 function unload_profile(name, reverse_unload)
-    local profile_list = mp.get_property_native("profile-list")
     local sub_profiles = {}
     
     for _, profile in pairs(profile_list) do
@@ -93,15 +91,15 @@ function unload_profile(name, reverse_unload)
                             elseif key_second == "toggle" then
                                 -- change nothing here
                             else
-                                msg.error("Couldn't process list command: "..key) -- TODO: -del and -clr not implemented
+                                msg.warn("Couldn't process list command: "..key) -- TODO: -del and -clr not implemented
                             end
                             
                             mp.commandv("no-osd", key_first, key_second, val)
                         else
-                            msg.error("Couldn't process list command: "..key) -- TODO: Can somebody help me with this / how to execute demuxer-lavf-o-toggle=fflags=+nobuffer via lua?
+                            msg.warn("Couldn't process list command: "..key) -- TODO: Can somebody help me with this / how to execute demuxer-lavf-o-toggle=fflags=+nobuffer via lua?
                         end
                     elseif default == nil or default == "" then
-                        msg.error("Empty default value for "..key)
+                        msg.warn("Empty default value for "..key)
                     else
                         mp.commandv("no-osd", "set", key, default)
                     end
