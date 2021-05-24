@@ -6,7 +6,19 @@
     defaultBranch = main
 
 [alias]
-    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    # git brecent: cargo install xcol
+    rank = shortlog -sn --no-merges
+    hist = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%Creset %C(magenta)%h%C(green)%d%Creset %C()%s %C(black) [%an]%Creset\"
+    cplain = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+    cfiles = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+    cdesc = log --pretty=format:\" * %s\"
+    brecent = !script -efq -c \"git branch --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s ￿
+    bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
+
+[merge]
+  summary = true
+  verbosity = 1
+  tool = kdiff3
 
 [delta]
     features = side-by-side line-numbers decorations
