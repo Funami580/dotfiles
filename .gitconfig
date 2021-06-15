@@ -1,6 +1,7 @@
 [core]
     editor = nano
     pager = delta
+	excludesFile = ~/.gitignore
 
 [init]
     defaultBranch = main
