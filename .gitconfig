@@ -21,7 +21,7 @@
     cplain = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
     cfiles = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
     cdesc = log --pretty=format:\" * %s\"
-    brecent = !script -efq -c \"git branch --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s ￿
+    brecent = !script -efq -O /dev/null -c \"git branch --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s ￿
     bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
 
 [merge]
