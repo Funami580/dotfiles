@@ -195,6 +195,10 @@ function best_sub(audio_track)
         end
     end
     
+    if best_subtitle_track == nil then
+        return nil
+    end
+    
     if should_forced and best_subtitle_track["forced"] == false and #best_subtitle_tracks >= 2 then
         return best_subtitle_tracks[2]
     end
