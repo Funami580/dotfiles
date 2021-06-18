@@ -8,8 +8,14 @@
 
 [alias]
     # git brecent: cargo install xcol
+    a = add
+    s = status
     d = diff
     ds = diff --staged
+    c = commit
+    cm = commit -m
+    ca = commit --amend
+    cam = commit --amend -m
     rank = shortlog -sn --no-merges
     hist = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%Creset %C(magenta)%h%C(green)%d%Creset %C()%s %C(black) [%an]%Creset\"
     cplain = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
