@@ -6,8 +6,12 @@
 [[ $- != *i* ]] && return
 
 PS1='[\u@\h \W]\$ '
-
 HISTSIZE=-1
+
+export LC_ALL=C
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+
 export PATH=$PATH:~/.cargo/bin/
 export BAT_PAGER="less -iFx4 --mouse --wheel-lines=4"
 export EXA_COLORS="reset:ex=31" # only color directories and executables
