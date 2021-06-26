@@ -1,0 +1,15 @@
+{
+    "servers": {
+        "python": {
+            "command": ["python3", "-m", "pyls", "--check-parent-process"],
+            "url": "https://github.com/palantir/python-language-server",
+            "highlightingModeRegex": "^Python$"
+        },
+        "rust": {
+            "command": ["rust-analyzer"],
+            "rootIndicationFileNames": ["Cargo.lock", "Cargo.toml"],
+            "url": "https://github.com/rust-analyzer/rust-analyzer",
+            "highlightingModeRegex": "^Rust$"
+        }
+    }
+}
