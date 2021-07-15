@@ -13,11 +13,13 @@
     d = diff
     ds = diff --staged
     dst = diff --stat
-    dsst = diff --staged --staged
+    dsst = diff --staged --stat
     c = commit
     cm = commit -m
     ca = commit --amend
     cam = commit --amend -m
+    co = checkout
+    cob = checkout -b
     de = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
     des = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits --stat -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
     rank = shortlog -sn --no-merges
@@ -26,8 +28,10 @@
     cfiles = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
     cdesc = log --pretty=format:\" * %s\"
     bc = branch --show-current
+    br = branch -m
     brecent = !script -efq -O /dev/null -c \"git branch --sort=-HEAD --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s "￿"
     bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
+    whois = "!bash -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
 
 [merge]
   summary = true
