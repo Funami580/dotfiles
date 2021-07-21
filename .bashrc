@@ -30,5 +30,16 @@ alias mainboard='cat /sys/devices/virtual/dmi/id/board_{vendor,name,version}' # 
 alias memory='echo $(perl -E "printf(\"%.1f\", $(cat /proc/meminfo | grep MemTotal | sed s/[^[:digit:]]//g)*1000/1024/1024/1024)") GiB Memory'
 alias gpu='cat "/proc/driver/nvidia/gpus/0000:0a:00.0/information" | grep Model | sed s/.*Model[[:space:]:]*//' # only nvidia support
 alias system='echo -e "CPU\n$(cpu | sed "s/^/> /")\n\nMemory\n$(memory | sed "s/^/> /")\n\nGPU\n$(gpu | sed "s/^/> /")\n\nMainboard\n$(mainboard | sed "s/^/> /")"'
+alias ipl='ip address | grep "inet 192" | sed "s/^.*inet \(192\.[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\).*$/\1/"'
+alias ipr='curl ifconfig.co'
+
+chr() {
+  [ "$1" -lt 256 ] || return 1
+  printf "\\$(printf '%03o' "$1")\n"
+}
+
+ord() {
+  LC_CTYPE=C printf '%d\n' "'$1"
+}
 
 source ~/.config/broot/launcher/bash/br
