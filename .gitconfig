@@ -7,7 +7,6 @@
     defaultBranch = main
 
 [alias]
-    # git brecent: cargo install xcol
     a = add
     s = status
     d = diff
@@ -23,9 +22,15 @@
     de = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
     des = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits --stat -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
     rank = shortlog -sn --no-merges
-    hist = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%Creset %C(magenta)%h%C(green)%d%Creset %C()%s %C(black) [%an]%Creset\"
-    cplain = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
-    cfiles = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+    l = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(green)%an %C(reset)%s\"
+    lm = !script -efq -O /dev/null -c \"git log --decorate --graph --date=short --pretty='format:%C(blue)%ad%C(reset)￿%h￿%C(green)%an￿%C(reset)%s'\" | xcol -s "￿"
+    lr = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ar%C(reset) %h %C(green)%an %C(reset)%s\"
+    lrm = !script -efq -O /dev/null -c \"git log --decorate --graph --date=short --pretty='format:%C(blue)%ar%C(reset)￿%h￿%C(green)%an￿%C(reset)%s'\" | xcol -s "￿"
+    lref = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(magenta)%an%C(green)%d%C(reset) %s\"
+    lrref = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(magenta)%an%C(green)%d%C(reset) %s %C(blue)[%ar]\"
+    hist = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %C(magenta)%h%C(green)%d%C(reset) %s\"
+    cplain = log --pretty=format:\"%h %cr %cn %C(green)%s%C(reset)\"
+    cfiles = log --pretty=format:\"%h %cr %cn %C(green)%s%C(reset)\" --name-status
     cdesc = log --pretty=format:\" * %s\"
     bc = branch --show-current
     br = branch -m
