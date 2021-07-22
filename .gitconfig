@@ -13,6 +13,7 @@
     ds = diff --staged
     dst = diff --stat
     dsst = diff --staged --stat
+    dlc = diff HEAD~1 HEAD
     c = commit
     cm = commit -m
     ca = commit --amend
