@@ -6,7 +6,12 @@
 [[ $- != *i* ]] && return
 
 PS1='[\u@\h \W]\$ '
-HISTSIZE=-1
+HISTSIZE=5000
+HISTFILESIZE=-1
+HISTIGNORE='&:[ ]*'
+
+shopt -q -s histappend
+shopt -q -s nocaseglob
 
 export LC_ALL=C
 export LANG=en_US.UTF-8
@@ -24,6 +29,13 @@ alias gu='git-user'
 alias gua='git-user add'
 alias guc='git-user current'
 alias hexv='hexv -f Hack'
+
+# https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#List_of_installed_packages
+alias pacsize='LC_ALL=C pacman -Qi | awk "/^Installed Size/{print \$4\$5}" | sed -e s/KiB/*1024/ -e s/MiB/*$((1024*1024))/ -e s/GiB/*$((1024*1024*1024))/ | tr "\n" "+" | head -c -1 | sed -e s/^/scale=1\;\(/ -e s/$/\)\\/\(1024*1024*1024\)\\n/ | bc | sed "s/$/ GiB/"'
+alias pacsizes='LC_ALL=C pacman -Qi | awk "/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}" | sort -hr'
+alias allinstalled='pacman -Qqe'
+alias aurinstalled='pacman -Qqem'
+alias pacinstalled='comm -23 <(allinstalled) <(aurinstalled)'
 
 alias neofetch='neofetch --off --color_blocks off | head -n -2'
 alias cpu='echo -e "$(cat /proc/cpuinfo | grep "model name" | uniq | sed "s/.*model name[[:space:]:]*//")\n$(cat /proc/cpuinfo | grep -i "cpu cores" | uniq | sed "s/.*cpu cores[[:space:]:]*"//) Cores, $(cat /proc/cpuinfo | grep siblings | uniq | sed s/.*siblings[[:space:]:]*//) Threads\n$(lscpu | grep "CPU max MHz" | sed "s/.*CPU max MHz[[:space:]:]*//" | cut -f 1 -d ".") MHz"'
