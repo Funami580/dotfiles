@@ -18,6 +18,8 @@
     cm = commit -m
     ca = commit --amend
     cam = commit --amend -m
+    caru = commit --amend --reuse-message=HEAD
+    care = commit --amend --reedit-message=HEAD
     co = checkout
     cob = checkout -b
     de = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
@@ -38,6 +40,7 @@
     brecent = !script -efq -O /dev/null -c \"git branch --sort=-HEAD --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s "￿"
     bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
     whois = "!bash -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    root = rev-parse --show-toplevel
 
 [merge]
   summary = true
