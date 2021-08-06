@@ -16,6 +16,7 @@ reflector
 networkmanager
 iptables
 fail2ban
+whois
 
 # Build system
 pkgconf

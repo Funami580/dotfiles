@@ -1,5 +1,6 @@
 # Guide 1: https://wiki.archlinux.org/title/Installation_guide
 # Guide 2: https://wiki.archlinux.de/title/Anleitung_für_Einsteiger
+# https://wiki.archlinux.org/title/PipeWire#Audio
 
 # Update pacman.conf
 # - Add ParallelDownloads = 5
