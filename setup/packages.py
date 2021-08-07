@@ -78,9 +78,12 @@ ttf-hack
 
 # Graphics driver etc.
 < Is your graphics card from Nvidia? Cancel, if not.
-nvidia
-opencl-nvidia
-cuda
+mesa
+libva-mesa-driver
+mesa-vdpau
+opencl-mesa
+vulkan-mesa-layers
+xf86-video-nouveau
 
 # Printer
 cups
@@ -186,7 +189,12 @@ pypy3
 rustup
 sccache
 @mold
-%wasm-pack
+cargo-audit
+cargo-udeps
+@wasm-pack
+@cargo-profiler
+@cargo-license
+@cargo-pkgbuild
 %cargo-nono
 
 # Language Server Protocol
