@@ -10,6 +10,8 @@
 
 # Pacman
 pacman-contrib # paccache, paclist, ...
+rebuild-detector
+arch-rebuild-order
 reflector
 
 # Network
@@ -32,14 +34,13 @@ meson
 ninja
 
 # File systems
+btrfs-progs # Btrfs
+e2fsprogs # ext3 / ext4
+ntfs-3g # NTFS
+dosfstools # FAT
+exfatprogs # exFAT
 mtpfs # MTP devices
-@hfsprogs # for macOS
-# Included by default:
-# - btrfs-progs # Btrfs
-# - e2fsprogs # ext3 / ext4
-# - ntfs-3g # NTFS
-# - dosfstools # FAT
-# - exfatprogs # exFAT
+hfsprogs # for macOS
 
 # Archives and compression
 arj
@@ -63,7 +64,7 @@ ark # GUI application
 # Git
 git
 git-delta
-%git-interactive-rebase-tool
+@git-interactive-rebase-tool-git
 gitui
 
 # Fonts
@@ -78,12 +79,9 @@ ttf-hack
 
 # Graphics driver etc.
 < Is your graphics card from Nvidia? Cancel, if not.
-mesa
-libva-mesa-driver
-mesa-vdpau
-opencl-mesa
-vulkan-mesa-layers
-xf86-video-nouveau
+nvidia
+opencl-nvidia
+cuda
 
 # Printer
 cups
@@ -103,15 +101,19 @@ which
 bc
 nano
 neovim
-helix # vim alternative
-bind # dig (dns lookup)
-perl-archive-zip # CRC32
-moreutils # errno
-imagemagick # convert (for images)
 dos2unix
 openssh
 stress
 xclip
+imagemagick # convert (for images)
+perl-archive-zip # CRC32
+moreutils # errno
+bind # dig (dns lookup)
+dog # Rust alternative: dig (dns lookup)
+dust # Rust alternative: du (disk usage)
+bottom # nice cli system monitoring in Rust
+bandwhich # nice cli bandwith usage in Rust
+xh # Rust alternative: curl
 fd # Rust alternative: find
 ripgrep # Rust alternative: grep
 sd # Rust alternative: sed
@@ -168,6 +170,7 @@ kotlin
 @ki-shell-bin
 
 # Android
+android-studio
 android-emulator
 android-platform
 android-sdk
@@ -175,7 +178,6 @@ android-sdk-platform-tools
 android-udev
 @android-sdk-build-tools
 @android-apktool
-@android-studio
 @android-x86-64-system-image
 
 # Python
@@ -188,6 +190,7 @@ pypy3
 # Rust
 rustup
 sccache
+clang # necessary as linker for mold
 @mold
 cargo-audit
 cargo-udeps
@@ -204,7 +207,6 @@ python-language-server
 lua-language-server
 texlab
 @java-language-server
-@groovy-language-server-git
 @typescript-language-server-bin
 @nodejs-svelte-language-server
 @dockerfile-language-server
@@ -217,7 +219,6 @@ librewolf-extension-localcdn
 ungoogled-chromium
 firefox-developer-edition
 firefox-developer-edition-i18n-de
-@phantomjs-bin
 
 # Tor
 tor
@@ -248,6 +249,7 @@ mkvtoolnix-gui
 # Downloader
 jdownloader2
 youtube-dl
+youtube-dlp
 you-get
 streamlink
 @annie
@@ -258,7 +260,7 @@ intellij-idea-ultimate-edition
 intellij-idea-ultimate-edition-jre
 pycharm-professional
 clion
-@vscodium-bin
+vscodium
 kdevelop
 
 # File transfer
@@ -315,7 +317,7 @@ deja-dup # Backup tool
 
 # Boot sticks and imagers
 ventoy-bin
-@etcher-bin
+balena-etcher
 @rpi-imager
 
 # LaTeX
@@ -338,7 +340,7 @@ kcalc
 anydesk-bin
 teamviewer
 zoom
-@rustdesk-bin
+rustdesk
 
 # Aegisub
 < Install Aegisub? Cancel, if not.
@@ -360,6 +362,7 @@ kdiskmark # HDD/SSD benchmarking
 google-earth-pro # Google Earth
 qemu # Emulator and virtualizer
 wireshark-qt # See network traffic
+partitionmanager # KDE partition manager
 @nbteditor-bin # NBT editor for Minecraft
 
 # Games

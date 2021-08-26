@@ -55,15 +55,16 @@ alias allinstalled='pacman -Qqe'
 alias aurinstalled='pacman -Qqem'
 alias pacinstalled='comm -23 <(allinstalled) <(aurinstalled)'
 alias chaoticinstalled='paclist chaotic-aur'
+alias checkrebuildc='checkrebuild -i chaotic-aur'
 alias rmsyspkgs='grep -P ^\(\?\!xorg\|plasma\)'
 
-alias neofetch='neofetch --off --color_blocks off | head -n -2'
-alias cpu='echo -e "$(cat /proc/cpuinfo | grep "model name" | uniq | sed "s/.*model name[[:space:]:]*//")\n$(cat /proc/cpuinfo | grep -i "cpu cores" | uniq | sed "s/.*cpu cores[[:space:]:]*"//) Cores, $(cat /proc/cpuinfo | grep siblings | uniq | sed s/.*siblings[[:space:]:]*//) Threads\n$(lscpu | grep "CPU max MHz" | sed "s/.*CPU max MHz[[:space:]:]*//" | cut -f 1 -d ".") MHz"'
+#alias neofetch='neofetch --off --color_blocks off | head -n -2'
+alias cpu='echo -e "$(cat /proc/cpuinfo | grep "model name" | uniq | sed "s/.*model name[[:space:]:]*//")\n$(cat /proc/cpuinfo | grep -i "cpu cores" | uniq | sed "s/.*cpu cores[[:space:]:]*"//) Cores, $(cat /proc/cpuinfo | grep siblings | uniq | sed s/.*siblings[[:space:]:]*//) Threads\n$(lscpu | awk "/CPU max MHz/ {print \$4}" | cut -f 1 -d ".") MHz"'
 alias mainboard='cat /sys/devices/virtual/dmi/id/board_{vendor,name,version}' # ; sudo dmesg | grep DMI: | sed "s/.*DMI[[:space:]:]*//"
 alias memory='echo $(perl -E "printf(\"%.1f\", $(cat /proc/meminfo | grep MemTotal | sed s/[^[:digit:]]//g)*1000/1024/1024/1024)") GiB Memory'
 alias gpu='cat "/proc/driver/nvidia/gpus/$(ls -1 /proc/driver/nvidia/gpus/ | head -n 1)/information" | grep Model | sed s/.*Model[[:space:]:]*//' # only nvidia support
 alias system='echo -e "CPU\n$(cpu | sed "s/^/> /")\n\nMemory\n$(memory | sed "s/^/> /")\n\nGPU\n$(gpu | sed "s/^/> /")\n\nMainboard\n$(mainboard | sed "s/^/> /")"'
-alias ipl='ip address | grep "inet 192" | sed "s/^.*inet \(192\.[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+\).*$/\1/"'
+alias ipl='ip a | awk "/inet 192/ {print \$2}" | cut -d "/" -f 1'
 alias ipr='echo -e "$(curl -s -4 ifconfig.co)\n$(curl -s -6 ifconfig.co)"'
 
 # Upload file to 0x0.st and copy url to clipboard
