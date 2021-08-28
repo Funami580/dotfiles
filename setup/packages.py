@@ -3,6 +3,7 @@
 ### Nothing = Default repositories and Chaotic AUR repository
 ### @ = AUR package
 ### % = cargo install
+### ? = --asdeps
 ### < = user confirmation before installation
 ### > = print to console after installation
 
@@ -19,6 +20,13 @@ networkmanager
 iptables
 fail2ban
 whois
+
+# Audio
+pipewire
+?pipewire-alsa
+?pipewire-pulse
+?pipewire-jack
+?gst-plugin-pipewire
 
 # Build system
 pkgconf
@@ -194,11 +202,13 @@ clang # necessary as linker for mold
 @mold
 cargo-audit
 cargo-udeps
+cargo-outdated
 @wasm-pack
 @cargo-profiler
 @cargo-license
 @cargo-pkgbuild
-%cargo-nono
+@cargo-clone
+@cargo-nono
 
 # Language Server Protocol
 rust-analyzer
@@ -243,11 +253,12 @@ makemkv
 mkvtoolnix-cli
 mkvtoolnix-gui
 @mkv-extractor-qt
-@mkclean
-@mkvalidator
+@?mkclean
+@?mkvalidator
 
 # Downloader
 jdownloader2
+@?phantomjs-bin
 youtube-dl
 youtube-dlp
 you-get
