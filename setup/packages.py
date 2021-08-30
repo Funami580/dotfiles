@@ -35,6 +35,7 @@ automake
 make
 cmake
 gcc
+clang
 m4
 patch
 fakeroot
@@ -65,6 +66,7 @@ gzip
 cpio
 lrzip
 lzop
+lhasa
 p7zip
 p7zip-gui # GUI application
 ark # GUI application
@@ -104,7 +106,9 @@ gawk
 perl
 nmap
 wget
+?ca-certificates
 wget2
+?ca-certificates
 which
 bc
 nano
@@ -114,6 +118,19 @@ openssh
 stress
 xclip
 imagemagick # convert (for images)
+?djvulibre
+?ghostscript
+?imagemagick-doc
+?libheif
+?libraw
+?librsvg
+?libwebp
+?libwmf
+?libxml2
+?ocl-icd
+?openexr
+?openjpeg2
+?pango
 perl-archive-zip # CRC32
 moreutils # errno
 bind # dig (dns lookup)
@@ -198,7 +215,6 @@ pypy3
 # Rust
 rustup
 sccache
-clang # necessary as linker for mold
 @mold
 cargo-audit
 cargo-udeps
@@ -245,11 +261,13 @@ vlc
 # Video tools
 @ffmpeg-full
 obs-studio
+?libfdk-aac
 davinci-resolve
 kdenlive
 mediainfo
 mediainfo-gui
 makemkv
+?lib32-glibc
 mkvtoolnix-cli
 mkvtoolnix-gui
 @mkv-extractor-qt
@@ -260,17 +278,29 @@ mkvtoolnix-gui
 jdownloader2
 @?phantomjs-bin
 youtube-dl
+?python-pycryptodome
+?rtmpdump
 youtube-dlp
+?rtmpdump
 you-get
+?python-pysocks
 streamlink
 @annie
 
 # IDEs
 > You may need to export CLION_JDK=/usr/lib/jvm/java-11-openjdk in /etc/profile or /etc/environment
 intellij-idea-ultimate-edition
-intellij-idea-ultimate-edition-jre
+?intellij-idea-ultimate-edition-jre
 pycharm-professional
+?cython
+?python-pytest
 clion
+?clion-jre
+?clion-gdb
+?clion-cmake
+?clion-lldb
+?gcc
+?clang
 vscodium
 kdevelop
 
@@ -293,15 +323,20 @@ mp3wrap
 # Communication
 > You may need to override the .desktop file for Discord
 discord_arch_electron
+?xdg-utils
 signal-desktop
 element-desktop
 teamspeak3
 
 # Image viewer/editors
 gwenview
+?kimageformats
+?qt5-imageformats
 gimp
+?poppler-glib
 krita
 inkscape
+?scour
 @xnconvert
 
 # Image compression
@@ -312,7 +347,12 @@ guetzli # Lossy JPEG
 kate
 libreoffice-still
 libreoffice-still-de
+?coin-or-mp
+?gst-plugins-base-libs
+?gtk3
 ghostwriter # Markdown editor
+?mathjax
+?pandoc
 
 # Text diffs with GUI
 kdiff3
@@ -320,7 +360,6 @@ kompare
 
 # File managers and tools
 dolphin
-krusader
 kfind
 krename
 filelight # View disk usage information
@@ -330,10 +369,12 @@ deja-dup # Backup tool
 ventoy-bin
 balena-etcher
 @rpi-imager
+@?dosfstools
 
 # LaTeX
 texlive-most
 texworks
+?gsfonts
 kile
 
 # OCR + Tesseract
@@ -363,14 +404,25 @@ rustdesk
 # Other GUI applications
 > You may want to create a shortcut for flameshot
 okular # PDF viewer
+?unrar
+?ebook-tools
 flameshot # Screenshot
 k3b # Burn disks
+?cdparanoia
+?cdrdao
+?cdrtools
+?dvd+rw-tools
+?emovix
+?transcode
+?vcdimager
 keepassxc # Password manager
 kcolorchooser # Choose color from desktop
 fontforge # Font editor
 acetoneiso2 # ISO manager
+?p7zip
 kdiskmark # HDD/SSD benchmarking
 google-earth-pro # Google Earth
+virtualbox # Virtualizer
 qemu # Emulator and virtualizer
 wireshark-qt # See network traffic
 partitionmanager # KDE partition manager
@@ -379,7 +431,10 @@ partitionmanager # KDE partition manager
 # Games
 < Install games?
 wine
+wine-mono
+winetricks
 proton-ge-custom-bin
+@?xboxdrv
 steam
 minecraft-launcher
 

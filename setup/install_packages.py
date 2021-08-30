@@ -47,16 +47,16 @@ with open("packages.py", "r") as f:
     pkg_cargo = list(dict.fromkeys(pkg_cargo))
     
     if pkg_arch:
-        print(f"sudo pacman -S {' '.join(pkg_arch)}\n")
+        print(f"sudo pacman -S --asexplicit {' '.join(pkg_arch)}\n")
     
     if pkg_aur:
-        print(f"paru -S {' '.join(pkg_aur)}\n")
+        print(f"paru -S --asexplicit {' '.join(pkg_aur)}\n")
     
     if pkg_arch_asdeps:
-        print(f"sudo pacman -S --asdeps {' '.join(pkg_arch_asdeps)}\n")
+        print(f"sudo pacman -S --asdeps --needed {' '.join(pkg_arch_asdeps)}\n")
     
     if pkg_aur_asdeps:
-        print(f"paru -S --asdeps {' '.join(pkg_aur_asdeps)}\n")
+        print(f"paru -S --asdeps --needed {' '.join(pkg_aur_asdeps)}\n")
     
     if pkg_cargo:
         print(f"cargo install {' '.join(pkg_cargo)}\n")
