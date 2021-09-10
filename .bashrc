@@ -24,7 +24,7 @@ export EXA_COLORS="reset:ex=31" # only color directories and executables
 alias lsx='exa -lbh --group-directories-first'
 alias loc='tokei' # lines of code
 alias catr='cat -v' # cat-raw
-alias hexv='hexv -f Hack'
+alias hexv='hexv -f Hack,Twemoji'
 
 alias gu='git-user'
 alias gua='git-user add'
@@ -57,6 +57,8 @@ alias pacinstalled='comm -23 <(allinstalled) <(aurinstalled)'
 alias chaoticinstalled='paclist chaotic-aur'
 alias checkrebuildc='checkrebuild -i chaotic-aur'
 alias rmsyspkgs='grep -P ^\(\?\!xorg\|plasma\)'
+alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
+alias checkaurupd='python3 ~/Programme/AUR_packages/check_crates_updates.py'
 
 #alias neofetch='neofetch --off --color_blocks off | head -n -2'
 alias cpu='echo -e "$(cat /proc/cpuinfo | grep "model name" | uniq | sed "s/.*model name[[:space:]:]*//")\n$(cat /proc/cpuinfo | grep -i "cpu cores" | uniq | sed "s/.*cpu cores[[:space:]:]*"//) Cores, $(cat /proc/cpuinfo | grep siblings | uniq | sed s/.*siblings[[:space:]:]*//) Threads\n$(lscpu | awk "/CPU max MHz/ {print \$4}" | cut -f 1 -d ".") MHz"'
