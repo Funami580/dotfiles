@@ -81,11 +81,12 @@ gitui
 adobe-source-code-pro-fonts
 adobe-source-han-sans-otc-fonts
 noto-fonts
-noto-fonts-emoji
 noto-fonts-cjk
-ttf-dejavu
+ttf-bitstream-vera
+ttf-twemoji
 ttf-liberation
 ttf-hack
+> You need to execute a command similar to: sudo cp /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/
 
 # Graphics driver etc.
 < Is your graphics card from Nvidia? Cancel, if not.
@@ -104,6 +105,7 @@ grep
 sed
 gawk
 perl
+jq
 nmap
 wget
 ?ca-certificates
@@ -131,6 +133,7 @@ imagemagick # convert (for images)
 ?openexr
 ?openjpeg2
 ?pango
+traceroute
 perl-archive-zip # CRC32
 moreutils # errno
 bind # dig (dns lookup)
@@ -342,6 +345,7 @@ inkscape
 # Image compression
 optipng # Lossless PNG
 guetzli # Lossy JPEG
+libwebp # WebP
 
 # Text editors with GUI
 kate
