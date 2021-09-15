@@ -69,6 +69,16 @@ alias system='echo -e "CPU\n$(cpu | sed "s/^/> /")\n\nMemory\n$(memory | sed "s/
 alias ipl='ip a | awk "/inet 192/ {print \$2}" | cut -d "/" -f 1'
 alias ipr='echo -e "$(curl -s -4 ifconfig.co)\n$(curl -s -6 ifconfig.co)"'
 
+# From: https://github.com/EaterOA/dotfiles/blob/master/.bashrc
+# copy from stdin or file into X clipboard
+alias copy="xclip -sel clip"
+# url encode/decode
+alias urlencode='python3 -c "import sys, urllib.parse as u; sys.stdout.write(u.quote(sys.stdin.read(), \"/\n\"))"'
+alias urldecode='python3 -c "import sys, urllib.parse as u; sys.stdout.write(u.unquote(sys.stdin.read()))"'
+# html encode/decode
+alias htmlencode='python3 -c "import sys, html as h; sys.stdout.write(h.escape(sys.stdin.read()))"'
+alias htmldecode='python3 -c "import sys, html as h; sys.stdout.write(h.unescape(sys.stdin.read()))"'
+
 # Upload file to 0x0.st and copy url to clipboard
 0x0() {
     url=$(curl -s -F "file=@$1" "https://0x0.st" | tr -d "\n")

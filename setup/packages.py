@@ -227,7 +227,7 @@ cargo-outdated
 @cargo-license
 @cargo-pkgbuild
 @cargo-clone
-@cargo-nono
+@cargo-nono-bin
 
 # Language Server Protocol
 rust-analyzer
