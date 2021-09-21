@@ -8,7 +8,7 @@
 PS1='[\u@\h \W]\$ '
 HISTSIZE=5000
 HISTFILESIZE=-1
-HISTIGNORE='&:[ ]*'
+HISTCONTROL=ignoreboth
 
 shopt -q -s histappend
 shopt -q -s nocaseglob
@@ -54,11 +54,19 @@ alias pacrmcache='du -sh /var/cache/pacman/pkg/ && paccache -d | tail -n -1 && r
 alias allinstalled='pacman -Qqe'
 alias aurinstalled='pacman -Qqem'
 alias pacinstalled='comm -23 <(allinstalled) <(aurinstalled)'
-alias chaoticinstalled='paclist chaotic-aur'
+alias chaoticinstalled='paclist chaotic-aur | awk "{ print \$1 }" | xargs -I% bash -c "pacman -Qqe % > /dev/null; [[ \$? = 0 ]] && echo %"'
 alias checkrebuildc='checkrebuild -i chaotic-aur'
 alias rmsyspkgs='grep -P ^\(\?\!xorg\|plasma\)'
+
+aurpkg() {
+  git clone "ssh://aur@aur.archlinux.org/$1.git"
+  bash -c "cd \"$(pwd)/$1\" && git branch -m master"
+}
 alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
 alias checkaurupd='python3 ~/Programme/AUR_packages/check_crates_updates.py'
+bindeps() { objdump -p "$1" | awk '/NEEDED/ { print $2 }' | xargs whereis | awk '{ print $2 }' | xargs pacman -Qqo | sort | uniq; }
+bindeps2() { objdump -p "$1" | awk '/NEEDED/ { print $2 }' | xargs whereis | xargs -I% bash -c 'echo $(echo % | cut -d: -f1): $(echo % | cut -d: -f2 | xargs pacman -Qqo)'; }
+bindeps3() { ldd "$1" | grep "=> /" | cut -d ">" -f2 | cut -d "(" -f 1 | xargs pacman -Qqo | sort | uniq; }
 
 #alias neofetch='neofetch --off --color_blocks off | head -n -2'
 alias cpu='echo -e "$(cat /proc/cpuinfo | grep "model name" | uniq | sed "s/.*model name[[:space:]:]*//")\n$(cat /proc/cpuinfo | grep -i "cpu cores" | uniq | sed "s/.*cpu cores[[:space:]:]*"//) Cores, $(cat /proc/cpuinfo | grep siblings | uniq | sed s/.*siblings[[:space:]:]*//) Threads\n$(lscpu | awk "/CPU max MHz/ {print \$4}" | cut -f 1 -d ".") MHz"'
