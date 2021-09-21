@@ -157,6 +157,7 @@ pueue # Command scheduler
 megatools # CLI for MEGA
 speedtest-cli # Internet speedtest
 neofetch # System information tool
+pax-utils # lddtree
 %git-user # Switch git users
 %xcol # Rust alternative: column
 %hexv # Alternative hex viewer
