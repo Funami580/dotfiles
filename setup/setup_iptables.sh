@@ -39,6 +39,7 @@ open_local_port_tcp_only() {
     sudo iptables -A TCP -p tcp --dport $1 -s 10.0.0.0/8 -j ACCEPT
     sudo iptables -A TCP -p tcp --dport $1 -s 172.16.0.0/12 -j ACCEPT
     sudo iptables -A TCP -p tcp --dport $1 -s 192.168.0.0/16 -j ACCEPT
+    sudo iptables -A TCP -p tcp --dport $1 -s 100.64.0.0/17 -j ACCEPT
     sudo iptables -A TCP -p tcp --dport $1 -j DROP
     
     sudo ip6tables -A TCP -p tcp --dport $1 -s ::/128 -j ACCEPT
@@ -54,6 +55,7 @@ open_local_port_udp_only() {
     sudo iptables -A UDP -p udp --dport $1 -s 10.0.0.0/8 -j ACCEPT
     sudo iptables -A UDP -p udp --dport $1 -s 172.16.0.0/12 -j ACCEPT
     sudo iptables -A UDP -p udp --dport $1 -s 192.168.0.0/16 -j ACCEPT
+    sudo iptables -A UDP -p udp --dport $1 -s 100.64.0.0/17 -j ACCEPT
     sudo iptables -A UDP -p udp --dport $1 -j DROP
     
     sudo ip6tables -A UDP -p udp --dport $1 -s ::/128 -j ACCEPT
