@@ -63,6 +63,10 @@ aurpkg() {
   bash -c "cd \"$(pwd)/$1\" && git branch -m master"
 }
 alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
+inbasedevel() {
+  LC_ALL=C pacman -Si $(pactree -rl "$1") 2>/dev/null | grep -q "^Groups *:.*base-devel"
+  [[ $? = 0 ]] && echo "$1 is in base-devel" || echo "$1 is NOT in base-devel"
+}
 alias checkaurupd='python3 ~/Programme/AUR_packages/check_crates_updates.py'
 bindeps() { objdump -p "$1" | awk '/NEEDED/ { print $2 }' | xargs whereis | awk '{ print $2 }' | xargs pacman -Qqo | sort | uniq; }
 bindeps2() { objdump -p "$1" | awk '/NEEDED/ { print $2 }' | xargs whereis | xargs -I% bash -c 'echo $(echo % | cut -d: -f1): $(echo % | cut -d: -f2 | xargs pacman -Qqo)'; }
