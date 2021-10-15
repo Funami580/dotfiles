@@ -1,0 +1,38 @@
+.:53 {
+    hosts {
+        fallthrough
+    }
+    cancel
+    cache 60
+    fanout . 127.0.0.1:5301 127.0.0.1:5302 127.0.0.1:5303 127.0.0.1:5304 {
+        attempt-count 0
+    }
+}
+
+.:5301 {
+    forward . tls://78.46.244.143 {
+        tls_servername dot-de.blahdns.com
+        health_check 5s
+    } 
+}
+
+.:5302 {
+    forward . tls://194.242.2.2 {
+        tls_servername doh.mullvad.net
+        health_check 5s
+    }
+}
+
+.:5303 {
+    forward . tls://193.19.108.2 {
+        tls_servername doh.mullvad.net
+        health_check 5s
+    }
+}
+
+.:5304 {
+    forward . tls://91.239.100.100 {
+        tls_servername anycast.censurfridns.dk
+        health_check 5s
+    }
+}
