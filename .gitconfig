@@ -37,7 +37,7 @@
     cdesc = log --pretty=format:\" * %s\"
     b = branch --sort=-committerdate --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)'
     bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
-    ba = branch
+    ba = branch -a
     bc = branch --show-current
     br = branch -m
     brecent = !script -efq -O /dev/null -c \"git branch --sort=-HEAD --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s "￿"
