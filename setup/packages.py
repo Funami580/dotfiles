@@ -229,8 +229,8 @@ sccache
 cargo-audit
 cargo-udeps
 cargo-outdated
+cargo-flamegraph
 @wasm-pack-bin
-@cargo-profiler
 @cargo-license
 @cargo-clone
 @cargo-nono-bin
