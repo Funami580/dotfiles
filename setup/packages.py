@@ -20,6 +20,7 @@ networkmanager
 iptables
 fail2ban
 whois
+@coredns-bin
 
 # Audio
 pipewire
@@ -74,7 +75,7 @@ ark # GUI application
 # Git
 git
 git-delta
-@git-interactive-rebase-tool-git
+@git-interactive-rebase-tool-bin
 gitui
 
 # Fonts
@@ -158,6 +159,11 @@ megatools # CLI for MEGA
 speedtest-cli # Internet speedtest
 neofetch # System information tool
 pax-utils # lddtree
+@mcfly-bin # Bash better history
+@htmlq-bin # jq for html
+@py-spy-bin # Python profiler
+@pastel-bin # Color helper
+@dnspeep-bin # Show dns requests
 %git-user # Switch git users
 %xcol # Rust alternative: column
 %hexv # Alternative hex viewer
@@ -223,10 +229,9 @@ sccache
 cargo-audit
 cargo-udeps
 cargo-outdated
-@wasm-pack
+@wasm-pack-bin
 @cargo-profiler
 @cargo-license
-@cargo-pkgbuild
 @cargo-clone
 @cargo-nono-bin
 
@@ -249,6 +254,7 @@ librewolf-extension-localcdn
 ungoogled-chromium
 firefox-developer-edition
 firefox-developer-edition-i18n-de
+opera
 
 # Tor
 tor
@@ -277,10 +283,12 @@ mkvtoolnix-gui
 @mkv-extractor-qt
 @?mkclean
 @?mkvalidator
+kamoso # Webcam
 
 # Downloader
 jdownloader2
 @?phantomjs-bin
+yt-dlp
 youtube-dl
 ?python-pycryptodome
 ?rtmpdump
@@ -289,7 +297,7 @@ youtube-dlp
 you-get
 ?python-pysocks
 streamlink
-@annie
+@annie-bin
 
 # IDEs
 > You may need to export CLION_JDK=/usr/lib/jvm/java-11-openjdk in /etc/profile or /etc/environment
@@ -314,7 +322,6 @@ deluge-gtk # Torrent
 
 # File sharing
 @ffsend-bin
-@imgur.sh
 
 # Audio
 audacious
@@ -329,6 +336,7 @@ mp3wrap
 discord_arch_electron
 ?xdg-utils
 signal-desktop
+telegram-desktop
 element-desktop
 teamspeak3
 
@@ -365,6 +373,10 @@ kompare
 
 # File managers and tools
 dolphin
+@rootactions-servicemenu
+@kde-servicemenus-pdf
+@kde-service-menu-reimage
+?jhead
 kfind
 krename
 filelight # View disk usage information
@@ -373,8 +385,9 @@ deja-dup # Backup tool
 # Boot sticks and imagers
 ventoy-bin
 balena-etcher
-@rpi-imager
-@?dosfstools
+@rpi-imager-bin
+?udisks2
+?dosfstools
 
 # LaTeX
 texlive-most
@@ -431,6 +444,7 @@ virtualbox # Virtualizer
 qemu # Emulator and virtualizer
 wireshark-qt # See network traffic
 partitionmanager # KDE partition manager
+@mullvad-vpn-bin
 @nbteditor-bin # NBT editor for Minecraft
 
 # Games
@@ -442,5 +456,6 @@ proton-ge-custom-bin
 @?xboxdrv
 steam
 minecraft-launcher
+minetest
 
-> Autostart: Discord, Thunderbird
+> Autostart: Discord, Thunderbird, Mullvad, Signal, Telegram
