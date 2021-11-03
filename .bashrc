@@ -108,3 +108,4 @@ ord() {
 }
 
 source ~/.config/broot/launcher/bash/br
+eval "$(mcfly init bash)"
