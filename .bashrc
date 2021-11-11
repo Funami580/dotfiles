@@ -5,7 +5,31 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PS1='[\u@\h \W]\$ '
+temp_file=$(mktemp)
+trap "rm $tempfile" EXIT
+
+ps1_color() {
+    if [[ $? = 0 ]]; then
+        status_color='\033[32m'
+    else
+        status_color='\033[31m'
+    fi
+    
+    read -r last_hist < $temp_file
+    
+    if [[ -z $last_hist ]]; then
+        status_color=''
+    fi
+    
+    if [[ $last_hist -ge $1 ]]; then
+        status_color=''
+    fi
+    
+    echo $1 > $temp_file
+    echo -e "$status_color"
+}
+
+PS1='[\u@\h \W]$(ps1_color \#)\$ \033[0m'
 HISTSIZE=5000
 HISTFILESIZE=-1
 HISTCONTROL=ignoreboth
