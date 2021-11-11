@@ -50,6 +50,7 @@ alias lsx='exa -lbh --group-directories-first'
 alias loc='tokei' # lines of code
 alias catr='cat -v' # cat-raw
 alias hexv='hexv -f Hack,Twemoji'
+alias russ='russ --database-path ~/.russ.db'
 
 alias gu='git-user'
 alias gua='git-user add'
@@ -98,7 +99,7 @@ bindeps() { objdump -p "$1" | awk '/NEEDED/ { print $2 }' | xargs whereis | awk 
 bindeps2() { objdump -p "$1" | awk '/NEEDED/ { print $2 }' | xargs whereis | xargs -I% bash -c 'echo $(echo % | cut -d: -f1): $(echo % | cut -d: -f2 | xargs pacman -Qqo)'; }
 bindeps3() { ldd "$1" | grep "=> /" | cut -d ">" -f2 | cut -d "(" -f 1 | xargs pacman -Qqo | sort | uniq; }
 
-#alias neofetch='neofetch --off --color_blocks off | head -n -2'
+alias neofetch='fastfetch --load-config neofetch'
 alias cpu='echo -e "$(cat /proc/cpuinfo | grep "model name" | uniq | sed "s/.*model name[[:space:]:]*//")\n$(cat /proc/cpuinfo | grep -i "cpu cores" | uniq | sed "s/.*cpu cores[[:space:]:]*"//) Cores, $(cat /proc/cpuinfo | grep siblings | uniq | sed s/.*siblings[[:space:]:]*//) Threads\n$(lscpu | awk "/CPU max MHz/ {print \$4}" | cut -f 1 -d ".") MHz"'
 alias mainboard='cat /sys/devices/virtual/dmi/id/board_{vendor,name,version}' # ; sudo dmesg | grep DMI: | sed "s/.*DMI[[:space:]:]*//"
 alias memory='echo $(perl -E "printf(\"%.1f\", $(cat /proc/meminfo | grep MemTotal | sed s/[^[:digit:]]//g)*1000/1024/1024/1024)") GiB Memory'
