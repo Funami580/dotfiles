@@ -157,9 +157,9 @@ broot # Fuzzy search + tree + cd
 pueue # Command scheduler
 megatools # CLI for MEGA
 speedtest-cli # Internet speedtest
-neofetch # System information tool
+fastfetch-git # System information tool
+mcfly # Bash better history
 pax-utils # lddtree
-@mcfly-bin # Bash better history
 @htmlq-bin # jq for html
 @py-spy-bin # Python profiler
 @pastel-bin # Color helper
