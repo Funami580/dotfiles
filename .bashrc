@@ -33,6 +33,7 @@ PS1='[\u@\h \W]$(ps1_color \#)\$ \033[0m'
 HISTSIZE=5000
 HISTFILESIZE=-1
 HISTCONTROL=ignoreboth
+HISTIGNORE='nohist:DISABLE_HIST=1 bash'
 
 shopt -q -s histappend
 shopt -q -s nocaseglob
@@ -65,6 +66,7 @@ no_home() {
     unshare -cm --keep-caps bash -c "mount -t tmpfs none /tmp; cp .Xauthority /tmp; mount -t tmpfs none /home/; mount -t tmpfs none /run/media/; cd /home; mkdir -p $USER; cd /home/$USER; mv /tmp/.Xauthority .Xauthority; $args"
 }
 
+alias nohist='DISABLE_HIST=1 bash'
 alias no-net='unshare -cn --keep-caps'
 alias no-home='no_home'
 alias mp3wrap2='find . -maxdepth 1 -iname "*.mp3" -print0 | sort -z | xargs -0 mp3wrap output.mp3 && mp3val -f output_MP3WRAP.mp3 && rm output_MP3WRAP.mp3.bak'
@@ -132,4 +134,11 @@ ord() {
 }
 
 source ~/.config/broot/launcher/bash/br
-eval "$(mcfly init bash)"
+
+if [[ ! -v DISABLE_HIST ]]; then
+    eval "$(mcfly init bash)"
+else
+    unset HISTFILE
+    HISTSIZE=0
+    echo "History disabled."
+fi
