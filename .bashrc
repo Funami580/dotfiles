@@ -63,7 +63,7 @@ alias fpermsh='stat -c %A' # file permissions human
 alias fchown='stat -c %U:%G' # user:group information
 
 no_home() {
-    args="$@"
+    local args="$@"
     unshare -cm --keep-caps bash -c "mount -t tmpfs none /tmp; cp .Xauthority /tmp; mount -t tmpfs none /home/; mount -t tmpfs none /run/media/; cd /home; mkdir -p $USER; cd /home/$USER; mv /tmp/.Xauthority .Xauthority; $args"
 }
 
@@ -120,7 +120,7 @@ alias htmldecode='python3 -c "import sys, html as h; sys.stdout.write(h.unescape
 
 # Upload file to 0x0.st and copy url to clipboard
 0x0() {
-    url=$(curl -s -F "file=@$1" "https://0x0.st" | tr -d "\n")
+    local url=$(curl -s -F "file=@$1" "https://0x0.st" | tr -d "\n")
     echo -n "$url" | xclip -selection clipboard -i
     echo "$url"
 }
