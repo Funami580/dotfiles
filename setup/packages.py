@@ -90,9 +90,10 @@ ttf-hack
 > You need to execute a command similar to: sudo cp /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/
 
 # Graphics driver etc.
-< Is your graphics card from Nvidia? Cancel, if not.
+< Is your graphics card from Nvidia? Cancel, if not. If yes, enable Full Composition Pipeline.
 nvidia
-opencl-nvidia
+?nvidia-settings
+?opencl-nvidia
 cuda
 
 # Printer
