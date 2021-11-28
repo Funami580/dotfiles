@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 temp_file=$(mktemp)
-trap "rm $tempfile" EXIT
+trap "rm $temp_file" EXIT
 
 ps1_color() {
     if [[ $? = 0 ]]; then
