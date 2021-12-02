@@ -29,7 +29,7 @@ ps1_color() {
     echo -e "$status_color"
 }
 
-PS1='[\u@\h \W]$(ps1_color \#)\$ \033[0m'
+PS1='[\u@\h \W]\[$(ps1_color \#)\]\$ \[\033[0m\]'
 HISTSIZE=5000
 HISTFILESIZE=-1
 HISTCONTROL=ignoreboth
