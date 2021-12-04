@@ -134,6 +134,17 @@ ord() {
     LC_CTYPE=C printf '%d\n' "'$1"
 }
 
+run_java() {
+    local cur_dir=$(pwd)
+    local tmp_dir=$(mktemp -d)
+    cp *.java "$tmp_dir"
+    cd "$tmp_dir"
+    javac -encoding utf8 -cp . "$1"
+    java "$(echo -n $1 | sed 's/.java//')"
+    cd "$cur_dir"
+    rm -rf "$tmp_dir"
+}
+
 source ~/.config/broot/launcher/bash/br
 
 if [[ ! -v DISABLE_HIST ]]; then
