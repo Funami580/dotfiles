@@ -29,7 +29,12 @@ ps1_color() {
     echo -e "$status_color"
 }
 
-PS1='[\u@\h \W]\[$(ps1_color \#)\]\$ \[\033[0m\]'
+get_title() {
+    history | awk '$1 == '"$1"' { print $0 }' | sed 's/\s*[0-9]*\s*//'
+}
+
+PS0='\[\e]2;$(get_title \!)\a\]'
+PS1='\[\e]2;\u@\h:\w\a\][\u@\h \W]\[$(ps1_color \#)\]\$ \[\033[0m\]'
 HISTSIZE=5000
 HISTFILESIZE=-1
 HISTCONTROL=ignoreboth
