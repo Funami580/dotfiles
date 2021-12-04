@@ -86,13 +86,13 @@ alias checkrebuildc='checkrebuild -i chaotic-aur'
 alias rmsyspkgs='grep -P ^\(\?\!xorg\|plasma\)'
 
 aurpkg() {
-  git clone "ssh://aur@aur.archlinux.org/$1.git"
-  bash -c "cd \"$(pwd)/$1\" && git branch -m master"
+    git clone "ssh://aur@aur.archlinux.org/$1.git"
+    bash -c "cd \"$(pwd)/$1\" && git branch -m master"
 }
 alias srcinfo='makepkg --printsrcinfo > .SRCINFO'
 inbasedevel() {
-  LC_ALL=C pacman -Si $(pactree -rl "$1") 2>/dev/null | grep -q "^Groups *:.*base-devel"
-  [[ $? = 0 ]] && echo "$1 is in base-devel" || echo "$1 is NOT in base-devel"
+    LC_ALL=C pacman -Si $(pactree -rl "$1") 2>/dev/null | grep -q "^Groups *:.*base-devel"
+    [[ $? = 0 ]] && echo "$1 is in base-devel" || echo "$1 is NOT in base-devel"
 }
 alias checkaurupd='python3 ~/Programme/AUR_packages/check_crates_updates.py'
 bindeps() { objdump -p "$1" | awk '/NEEDED/ { print $2 }' | xargs whereis | awk '{ print $2 }' | xargs pacman -Qqo | sort | uniq; }
@@ -126,12 +126,12 @@ alias htmldecode='python3 -c "import sys, html as h; sys.stdout.write(h.unescape
 }
 
 chr() {
-  [ "$1" -lt 256 ] || return 1
-  printf "\\$(printf '%03o' "$1")\n"
+    [ "$1" -lt 256 ] || return 1
+    printf "\\$(printf '%03o' "$1")\n"
 }
 
 ord() {
-  LC_CTYPE=C printf '%d\n' "'$1"
+    LC_CTYPE=C printf '%d\n' "'$1"
 }
 
 source ~/.config/broot/launcher/bash/br
