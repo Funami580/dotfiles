@@ -40,10 +40,11 @@ with open("packages.py", "r") as f:
         print()
     
     # Remove duplicates
+    explicit_total = set(pkg_arch) | set(pkg_aur)
     pkg_arch = list(dict.fromkeys(pkg_arch))
-    pkg_arch_asdeps = list(dict.fromkeys(pkg_arch_asdeps))
+    pkg_arch_asdeps = list(dict.fromkeys(filter(lambda x: x not in explicit_total, pkg_arch_asdeps)))
     pkg_aur = list(dict.fromkeys(pkg_aur))
-    pkg_aur_asdeps = list(dict.fromkeys(pkg_aur_asdeps))
+    pkg_aur_asdeps = list(dict.fromkeys(filter(lambda x: x not in explicit_total, pkg_aur_asdeps)))
     pkg_cargo = list(dict.fromkeys(pkg_cargo))
     
     if pkg_arch:

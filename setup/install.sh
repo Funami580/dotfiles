@@ -28,8 +28,8 @@ sudo pacman -Syu
 # Install paru
 cd ~
 sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git
-cd paru
+git clone https://aur.archlinux.org/paru-bin.git
+cd paru-bin
 makepkg -si
 cd ..
-rmdir paru
+rm -rf paru-bin
