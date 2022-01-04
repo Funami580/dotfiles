@@ -34,7 +34,7 @@ get_title() {
 }
 
 PS0='\[\e]2;$(get_title \!)\a\]'
-PS1='\[\e]2;\u@\h:\w\a\][\u@\h \W]\[$(ps1_color \#)\]\$ \[\033[0m\]'
+PS1='\[\e]2;\u@\h:\w\a\][\u@\h \W]\[$(ps1_color \#)\]\$\[\033[0m\] '
 HISTSIZE=5000
 HISTFILESIZE=-1
 HISTCONTROL=ignoreboth
@@ -43,9 +43,10 @@ HISTIGNORE='nohist:DISABLE_HIST=1 bash'
 shopt -q -s histappend
 shopt -q -s nocaseglob
 
-export LC_ALL=C
+unset LC_ALL
 export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
+export LC_MESSAGES=C
+export LC_PAPER=de_DE.UTF-8
 
 export PATH=$PATH:~/.cargo/bin/
 export BAT_PAGER="less -iFx4 --mouse --wheel-lines=4"
