@@ -34,11 +34,15 @@ get_title() {
 }
 
 PS0='\[\e]2;$(get_title \!)\a\]'
-PS1='\[\e]2;\u@\h:\w\a\][\u@\h \W]\[$(ps1_color \#)\]\$\[\033[0m\] '
+if [[ ! -v DISABLE_HOST ]]; then
+    PS1='\[\e]2;\u@\h:\w\a\][\u@\h \W]\[$(ps1_color \#)\]\$\[\033[0m\] '
+else
+    PS1='\[\e]2;\u@\h:\w\a\]\[$(ps1_color \#)\]\$\[\033[0m\] '
+fi
 HISTSIZE=5000
 HISTFILESIZE=-1
 HISTCONTROL=ignoreboth
-HISTIGNORE='nohist:DISABLE_HIST=1 bash'
+HISTIGNORE='nohist:nohost:DISABLE_HIST=1 bash:DISABLE_HOST=1 bash'
 
 shopt -q -s histappend
 shopt -q -s nocaseglob
@@ -74,6 +78,7 @@ no_home() {
 }
 
 alias nohist='DISABLE_HIST=1 bash'
+alias nohost='clear && DISABLE_HOST=1 bash'
 alias no-net='unshare -cn --keep-caps'
 alias no-home='no_home'
 alias mp3wrap2='find . -maxdepth 1 -iname "*.mp3" -print0 | sort -z | xargs -0 mp3wrap output.mp3 && mp3val -f output_MP3WRAP.mp3 && rm output_MP3WRAP.mp3.bak'
