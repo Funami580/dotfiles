@@ -141,6 +141,7 @@ moreutils # errno
 bind # dig (dns lookup)
 dog # Rust alternative: dig (dns lookup)
 dust # Rust alternative: du (disk usage)
+diskus # Another disk usage tool, more simplistic
 bottom # nice cli system monitoring in Rust
 bandwhich # nice cli bandwith usage in Rust
 xh # Rust alternative: curl
@@ -148,6 +149,7 @@ fd # Rust alternative: find
 ripgrep # Rust alternative: grep
 sd # Rust alternative: sed
 bat # Rust alternative: cat
+bat-extras # Extra functionality, e.g. batgrep
 exa # Rust alternative: ls
 miniserve # Serve files via HTTP
 hyperfine # Benchmark commands
