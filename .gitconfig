@@ -14,6 +14,7 @@
     au = add -u
     ap = add -p
     s = status
+    sh = show HEAD
     d = diff
     ds = diff --staged
     dst = diff --stat
@@ -44,6 +45,7 @@
     ba = branch -a
     bc = branch --show-current
     br = branch -m
+    bd = branch -d
     brecent = !script -efq -O /dev/null -c \"git branch --sort=-HEAD --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s "￿"
     bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
     whois = "!bash -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
@@ -60,6 +62,8 @@
     plus-style = syntax "#003800"
     minus-style = syntax "#3f0001"
     navigate = true
+    wrap-max-lines = unlimited
+    line-fill-method = spaces
 
 [delta "decorations"]
     commit-decoration-style = bold yellow box ul
