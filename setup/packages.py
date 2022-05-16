@@ -163,6 +163,9 @@ speedtest-cli # Internet speedtest
 fastfetch-git # System information tool
 mcfly # Bash better history
 pax-utils # lddtree
+strace # trace system calls
+perl-image-exiftool # show metadata of pdf/images via "exiftool -a -G1 <file>"
+lsof # find processes of opened files
 @htmlq-bin # jq for html
 @py-spy-bin # Python profiler
 @pastel-bin # Color helper
