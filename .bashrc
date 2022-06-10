@@ -29,15 +29,10 @@ ps1_color() {
     echo -e "$status_color"
 }
 
-get_title() {
-    history | awk '$1 == '"$1"' { print $0 }' | sed 's/\s*[0-9]*\s*//'
-}
-
-PS0='\[\e]2;$(get_title \!)\a\]'
 if [[ ! -v DISABLE_HOST ]]; then
-    PS1='\[\e]2;\u@\h:\w\a\][\u@\h \W]\[$(ps1_color \#)\]\$\[\033[0m\] '
+    PS1='[\u@\h \W]\[$(ps1_color \#)\]\$\[\033[0m\] '
 else
-    PS1='\[\e]2;\u@\h:\w\a\]\[$(ps1_color \#)\]\$\[\033[0m\] '
+    PS1='\[$(ps1_color \#)\]\$\[\033[0m\] '
 fi
 HISTSIZE=5000
 HISTFILESIZE=-1
@@ -91,10 +86,9 @@ alias pacrmorphans='sudo pacman -Rns $(pacman -Qdtq)'
 alias pacrmcache='du -sh /var/cache/pacman/pkg/ && paccache -d | tail -n -1 && read -p "Continue to remove cached packages?" && sudo paccache -r | tail -n -1'
 alias allinstalled='pacman -Qqe'
 alias aurinstalled='pacman -Qqem'
-alias pacinstalled='comm -23 <(allinstalled) <(aurinstalled)'
-alias chaoticinstalled='paclist chaotic-aur | awk "{ print \$1 }" | xargs -I% bash -c "pacman -Qqe % > /dev/null; [[ \$? = 0 ]] && echo %"'
+alias pacinstalled='comm -23 <(allinstalled | sort) <(aurinstalled | sort)'
+alias chaoticinstalled='paclist chaotic-aur | awk "{ print \$1 }" | xargs -I% bash -c "pacman -Qqe % > /dev/null; [[ \$? = 0 ]] && echo % || true"'
 alias checkrebuildc='checkrebuild -i chaotic-aur'
-alias rmsyspkgs='grep -P ^\(\?\!xorg\|plasma\)'
 
 aurpkg() {
     git clone "ssh://aur@aur.archlinux.org/$1.git"
@@ -145,15 +139,32 @@ ord() {
     LC_CTYPE=C printf '%d\n' "'$1"
 }
 
-run_java() {
-    local cur_dir=$(pwd)
-    local tmp_dir=$(mktemp -d)
-    cp *.java "$tmp_dir"
-    cd "$tmp_dir"
-    javac -encoding utf8 -cp . "$1"
-    java "$(echo -n $1 | sed 's/.java//')"
-    cd "$cur_dir"
-    rm -rf "$tmp_dir"
+stfu() {
+    ("$@" &> /dev/null &)
+}
+
+run_c() {
+    gcc -std=c11 \
+        -O2 \
+        -Wall \
+        -Wextra \
+        -Wpedantic \
+        -Wdouble-promotion \
+        -Wshadow \
+        -Wformat=2 \
+        -Wformat-security \
+        -Wundef \
+        -fno-common \
+        -Wconversion \
+        -Wduplicated-branches \
+        -Wduplicated-cond \
+        -Wcast-align=strict \
+        -Wstrict-prototypes \
+        -Wpacked \
+        -Winline \
+        -Winvalid-pch \
+        -fanalyzer \
+        "$@" && ./a.out
 }
 
 source ~/.config/broot/launcher/bash/br
