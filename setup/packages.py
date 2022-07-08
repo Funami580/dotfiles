@@ -234,6 +234,7 @@ sccache
 @mold
 cargo-audit
 cargo-udeps
+cargo-msrv
 cargo-outdated
 cargo-flamegraph
 @wasm-pack-bin
