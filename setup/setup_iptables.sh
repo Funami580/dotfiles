@@ -150,10 +150,10 @@ sudo ip6tables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 sudo ip6tables -A INPUT -j REJECT
 
 # SSH: tcp/22
-open_port 22 tcp
+open_local_port 22 tcp
 
 # CUPS/IPP: tcp/631
-open_port 631 tcp
+open_local_port 631 tcp
 
 # HTTP: tcp/udp/80
 open_port 80
