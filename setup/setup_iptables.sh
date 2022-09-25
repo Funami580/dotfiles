@@ -167,6 +167,9 @@ open_local_port 8080
 # Minecraft: tcp/udp/25565
 open_port 25565
 
+# VNC: tcp/5900
+open_local_port 5900 tcp
+
 # Save
 sudo iptables-save -f /etc/iptables/iptables.rules
 sudo ip6tables-save -f /etc/iptables/ip6tables.rules
