@@ -29,6 +29,10 @@ pipewire
 ?pipewire-jack
 ?gst-plugin-pipewire
 
+# Polkit
+polkit
+polkit-gnome
+
 # Build system
 pkgconf
 autoconf
@@ -46,11 +50,19 @@ ninja
 # File systems
 btrfs-progs # Btrfs
 e2fsprogs # ext3 / ext4
+f2fs-tools # F2FS
 ntfs-3g # NTFS
 dosfstools # FAT
 exfatprogs # exFAT
+jfsutils # JFS
+nilfs-utils # NILFS2
+reiserfsprogs # ReiserFS
+udftools # UDF
+xfsprogs # XFS
 mtpfs # MTP devices
 hfsprogs # for macOS
+gvfs
+gvfs-mtp
 
 # Archives and compression
 arj
@@ -96,9 +108,23 @@ nvidia
 ?opencl-nvidia
 cuda
 
+# Graphics
+mesa
+mesa-vdpau
+opencl-mesa
+vulkan-mesa-layers
+< Intel CPU? Cancel, if not.
+vulkan-intel
+libva-intel-driver # only one needed
+intel-media-driver # only one needed
+
+# xhci_pci module
+@upd72020x-fw
+
 # Printer
 cups
 cups-pdf
+gutenprint
 
 # Other CLI tools
 bash-completion
@@ -107,6 +133,8 @@ grep
 sed
 gawk
 perl
+man
+man-pages
 jq
 nmap
 wget
@@ -166,10 +194,14 @@ pax-utils # lddtree
 strace # trace system calls
 perl-image-exiftool # show metadata of pdf/images via "exiftool -a -G1 <file>"
 lsof # find processes of opened files
+gnu-netcat # find open ports of others
+tree # show files/directories as tree
 @htmlq-bin # jq for html
 @py-spy-bin # Python profiler
 @pastel-bin # Color helper
 @dnspeep-bin # Show dns requests
+@fdroidcl-bin # Install apps via cli
+@fend-bin # Calculator++
 %git-user # Switch git users
 %xcol # Rust alternative: column
 %hexv # Alternative hex viewer
@@ -274,6 +306,10 @@ thunderbird-i18n-de
 # Video players
 mpv
 vlc
+
+# Player controller
+playerctl
+mpv-mpris
 
 # Video tools
 @ffmpeg-full
