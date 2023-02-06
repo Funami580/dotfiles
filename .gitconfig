@@ -36,6 +36,8 @@
     lr = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ar%C(reset) %h %C(green)%an %C(reset)%s\"
     lref = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(magenta)%an%C(green)%d%C(reset) %s\"
     lrref = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(magenta)%an%C(green)%d%C(reset) %s %C(blue)[%ar]\"
+    ld = log -p
+    ls = log --stat
     hist = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %C(magenta)%h%C(green)%d%C(reset) %s\"
     cplain = log --pretty=format:\"%h %cr %cn %C(green)%s%C(reset)\"
     cfiles = log --pretty=format:\"%h %cr %cn %C(green)%s%C(reset)\" --name-status
