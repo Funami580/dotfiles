@@ -43,11 +43,11 @@ function best_audio()
                     end
                     
                     for audio_index, audio_lang in pairs(native_lang_strings) do
-                        if string.match(string.lower(title), audio_lang) ~= nil then
+                        if title ~= nil and string.match(string.lower(title), audio_lang) ~= nil then
                             lang_index_loop = 0
                         end
                     
-                        if string.match(string.lower(best_audio_track["title"]), audio_lang) ~= nil then
+                        if best_audio_track["title"] ~= nil and string.match(string.lower(best_audio_track["title"]), audio_lang) ~= nil then
                             lang_index_base = 0
                         end
                     end
