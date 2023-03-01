@@ -27,6 +27,7 @@
     can = commit --amend --no-edit
     co = checkout
     cob = checkout -b
+    pf = push --force-with-lease
     rbi = rebase -i
     de = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
     des = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits --stat -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
