@@ -1,0 +1,112 @@
+# https://askubuntu.com/questions/452317/both-dhcp-and-static-ip-addresses-simultaneously-on-one-interface
+# https://askubuntu.com/questions/22835/how-to-network-two-ubuntu-computers-using-ethernet-without-a-router/
+$ nmcli connection   # find name or uuid you need for the next command
+$ sudo nmcli c edit 'Ethernet connection'
+
+===| nmcli interactive connection editor |===
+
+Editing existing '802-3-ethernet' connection: 'Ethernet connection 1'
+
+Type 'help' or '?' for available commands.
+Type 'describe [.]' for detailed property description.
+
+You may edit the following settings: connection, 802-3-ethernet (ethernet), 802-1x, dcb, ipv4, ipv6
+nmcli> goto ipv4
+You may edit the following properties: method, dns, dns-search, dns-options, dns-priority, addresses, gateway, routes, route-metric, ignore-auto-routes, ignore-auto-dns, dhcp-hostname, dhcp-send-hostname, never-default, may-fail, dad-timeout, dhcp-timeout, dhcp-client-id, dhcp-fqdn
+nmcli ipv4> set ipv4.addresses {your_address_here}/{your_network_prefix_here}  # e.g. 10.0.0.1/24
+Do you also want to set 'ipv4.method' to 'manual'? [yes]: no
+nmcli ipv4> save
+Connection 'Ethernet connection' (87fa8e41-7fe3-435a-a2f2-29a9c8084d2d) successfully updated.
+nmcli ipv4> quit
+
+$ sudo systemctl restart NetworkManager
+$ ip a   # should show the results
+
+
+
+echo 'blacklist pcspkr' > /etc/modprobe.d/nobeep.conf
+sudo nano /etc/systemd/system.conf
+sudo nano /etc/security/faillock.conf
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+
+mkdir Applications
+cd Applications
+mkdir gnirehtet
+cd gnirehtet
+wget 'https://github.com/Genymobile/gnirehtet/releases/download/v2.5/gnirehtet-rust-linux64-v2.5.zip'
+unzip gnirehtet-rust-linux64-v2.5.zip
+mkdir source
+cd source
+git clone https://github.com/Genymobile/gnirehtet.git
+cd gnirehtet/relay-rust/
+cargo build --release --locked
+cd ~/Applications/gnirehtet
+nano install.sh
+
+###
+#!/bin/bash
+install -Dm755 gnirehtet.sh "/usr/bin/gnirehtet"
+install -Dm755 ./source/gnirehtet/relay-rust/target/release/gnirehtet -t "/usr/share/gnirehtet"
+install -Dm644 gnirehtet.apk -t "/usr/share/gnirehtet"
+###
+
+chmod +x install.sh
+sudo ./install.sh
+sudo apt install android-tools-adb
+sudo nano /etc/systemd/system/gnirehtet.service
+
+###
+[Unit]
+Description=gnirehtet
+
+Requires=network.target
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/gnirehtet autorun -d 76.76.2.2
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+###
+
+sudo systemctl daemon-reload
+sudo systemctl enable gnirehtet.service
+sudo systemctl start gnirehtet.service
+sudo systemctl status gnirehtet.service
+
+wget '<Mullvad Url>'
+sudo dpkg -i <file.deb>
+mullvad lan set allow
+mullvad dns set custom '76.76.2.2'
+mullvad relay set tunnel-protocol wireguard
+mullvad tunnel ipv6 set on
+mullvad account login
+mullvad relay set hostname nl-ams-wg-101
+mullvad relay get
+mullvad connect
+mullvad auto-connect set on
+sudo systemctl enable mullvad-daemon
+curl https://am.i.mullvad.net/connected
+
+sudo apt install iptables-persistent
+cd Applications/
+mkdir iptables
+vi setup.sh
+nano setup.sh
+chmod +x setup.sh
+sudo ./setup.sh
+cat /etc/iptables/rules.v4
+cat /etc/iptables/rules.v6
+
+sudo nano /boot/armbianEnv.txt
+# https://forum.armbian.com/topic/9836-odroid-c2-usb-ports-are-still-not-working-properly/
+# add: extraargs=usbcore.autosuspend=-1
+
+reboot
+mullvad status
+sudo systemctl status gnirehtet.service
+sudo iptables -L
