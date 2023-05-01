@@ -1,0 +1,13 @@
+sudo pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-utils virtualbox-guest-iso
+paru -S virtualbox-unattended-templates
+ls /usr/share/virtualbox/UnattendedTemplates/win_nt6_unattended.xml  # confirm file exists
+sudo systemctl enable vboxservice.service
+sudo modprobe -a vboxdrv vboxguest vboxsf vboxvideo
+sudo usermod -aG vboxsf $USER
+sudo usermod -aG vboxusers $USER
+# logout/login
+groups
+
+# Tricks
+# if clipboard not working:
+# alias cliptype='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
