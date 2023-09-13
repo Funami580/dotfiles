@@ -172,7 +172,10 @@ run_c() {
 source ~/.config/broot/launcher/bash/br
 
 if [[ ! -v DISABLE_HIST ]]; then
-    eval "$(mcfly init bash)"
+    if [[ -f ~/.bash-preexec.sh ]]; then
+        source ~/.bash-preexec.sh
+        eval "$(atuin init bash --disable-up-arrow)"
+    fi
 else
     unset HISTFILE
     HISTSIZE=0
