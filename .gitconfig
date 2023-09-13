@@ -67,7 +67,9 @@
     minus-style = syntax "#3f0001"
     navigate = true
     wrap-max-lines = unlimited
+    wrap-right-percent = 15
     line-fill-method = spaces
+    tabs = 4
 
 [delta "decorations"]
     commit-decoration-style = bold yellow box ul
