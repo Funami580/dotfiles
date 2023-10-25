@@ -1,6 +1,11 @@
 {
-    "rust-analyzer.diagnostics.disabled": [
-        "macro-error"
-    ],
+    "svelte.enable-ts-plugin": true,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "rust-analyzer.completion.fullFunctionSignatures.enable": true,
+    "editor.fontFamily": "'Source Code Pro', 'Droid Sans Mono', 'monospace', monospace",
+    "editor.fontSize": 15,
+    "editor.renderWhitespace": "trailing",
+    "editor.wordWrap": "on",
+    "editor.formatOnType": true,
     "editor.stickyTabStops": true
 }
