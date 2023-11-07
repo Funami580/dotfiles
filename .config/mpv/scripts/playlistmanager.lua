@@ -64,10 +64,10 @@ local settings = {
   loadfiles_on_start = false,
 
   --sort playlist on mpv start
-  sortplaylist_on_start = true,
+  sortplaylist_on_start = false,
 
   --sort playlist when files are added to playlist
-  sortplaylist_on_file_add = true,
+  sortplaylist_on_file_add = false,
 
   --use alphanumerical sort
   alphanumsort = true,
