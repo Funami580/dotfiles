@@ -14,6 +14,7 @@
     au = add -u
     ap = add -p
     s = status
+    sa = status --untracked-files=all
     sh = show HEAD
     d = diff
     ds = diff --staged
