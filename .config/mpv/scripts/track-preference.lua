@@ -206,9 +206,13 @@ function best_sub(audio_track)
     return best_subtitle_track
 end
 
-function choose_best_tracks(silent)
+function choose_best_tracks(silent, change_subtitle)
     local audio = best_audio()
-    local subtitle = best_sub(audio)
+    local subtitle = nil
+
+    if change_subtitle then
+        subtitle = best_sub(audio)
+    end
     
     if audio ~= nil then
         mp.command("no-osd set aid " .. audio["id"])
@@ -224,11 +228,13 @@ function choose_best_tracks(silent)
 end
 
 function choose_best_tracks_silent()
-    choose_best_tracks(true)
+    local is_sub_external = mp.get_property_native("current-tracks/sub/external")
+    local change_subtitle = is_sub_external == nil or (is_sub_external ~= nil and is_sub_external == false)
+    choose_best_tracks(true, change_subtitle)
 end
 
 function choose_best_tracks_non_silent()
-    choose_best_tracks(false)
+    choose_best_tracks(false, true)
 end
 
 mp.register_event("file-loaded", choose_best_tracks_silent)
