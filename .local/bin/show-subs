@@ -1,0 +1,167 @@
+#!/usr/bin/env python
+import os
+import sys
+import re
+import subprocess
+import argparse
+import pyonfx
+
+def natural_sort(l):
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
+    return sorted(l, key=alphanum_key)
+
+def merge_overlapping_intervals(intervals):
+    sorted_by_lower_bound = sorted(intervals, key=lambda tup: tup[0])
+    merged = []
+
+    for higher in sorted_by_lower_bound:
+        if not merged:
+            merged.append(higher)
+        else:
+            lower = merged[-1]
+            # test for intersection between lower and higher:
+            # we know via sorting that lower[0] <= higher[0]
+            if higher[0] <= lower[1]:
+                upper_bound = max(lower[1], higher[1])
+                merged[-1] = (lower[0], upper_bound)  # replace by merged interval
+            else:
+                merged.append(higher)
+    return merged
+
+def format_text(text: str, keep_special: bool):
+    if keep_special:
+        return text.strip()
+    else:
+        text = re.sub(r" *\\N *", " ", text)
+        text = text.replace("\\n", " ")
+        text = text.strip()
+        text = text.replace("\\h", " ")
+        return text
+
+def colorize_matches(pattern: re.Pattern, text: str):
+    try:
+        from colorama import Fore
+        from colorama import Style
+        return pattern.sub(lambda m: f"{Style.BRIGHT}{Fore.RED}{m.group()}{Style.RESET_ALL}", text)
+    except Exception:
+        return text
+
+def main(ass_files: list[str], line_filter: re.Pattern, style_filter: re.Pattern | None, keep_special: bool):
+    if ass_files:
+        file_error = False
+        for file in ass_files:
+            if not os.path.exists(file):
+                print(f"Input file \"{file}\" does not exist")
+                file_error = True
+        if file_error:
+            sys.exit(1)
+    else:
+        # Find ass files recursively
+        ass_files = []
+        for root, _, files in os.walk(".", followlinks=False):
+            for file in files:
+                if file.lower().endswith(".ass"):
+                    ass_files.append(os.path.join(root, file))
+        ass_files = natural_sort(ass_files)
+
+    # Find videos and subs
+    video_files = []
+    video_error = False
+    found_lines = [[] for _ in range(len(ass_files))]
+    for i, ass_file in enumerate(ass_files):
+        io = pyonfx.Ass(os.path.abspath(ass_file), extended=False)
+        meta, _, lines = io.get_data()
+
+        video_file = meta.video
+        video_files.append(video_file)
+        if not os.path.isfile(video_file):
+            print(f"{os.path.basename(ass_file)}: video file \"{video_file}\" does not exist")
+            video_error = True
+
+        if video_error:
+            continue
+
+        for line in lines:
+            if line.comment or line.end_time <= line.start_time:
+                continue
+            if style_filter is not None and not style_filter.fullmatch(line.style):
+                continue
+            line.text = re.sub(r"\{.*?\}", "", line.raw_text)
+            if line_filter.search(format_text(line.text, keep_special)) is not None:
+                found_lines[i].append((line.start_time, line.end_time, line.text))
+
+    if video_error:
+        sys.exit(1)
+
+    for i in range(len(found_lines)):
+        time_list = [(x[0], x[1]) for x in found_lines[i]]
+        merged = merge_overlapping_intervals(time_list)
+        new_list = []
+        for time_start, time_end in merged:
+            texts = []
+            for old_start, old_end, old_text in found_lines[i]:
+                if time_start <= old_start <= old_end <= time_end:
+                    texts.append(old_text)
+            new_list.append((time_start, time_end, texts))
+        found_lines[i] = new_list
+
+    # Start mpv
+    mpv_command = [
+        "mpv",
+        "--no-terminal",
+        "--keep-open=yes",
+        "--sub-auto=no",
+        "--sub-fix-timing=no",
+        "--script-opts-append=playlistmanager-prefer_titles=all",
+        "--script-opts-append=playlistmanager-showamount=10",
+    ]
+    at_least_one_line = False
+    log_list = []
+    for i, video_lines in enumerate(found_lines):
+        for line in video_lines:
+            start_time = divmod(line[0], 1000)
+            end_time = divmod(line[1], 1000)
+            formatted_text = " ".join((format_text(text, False) for text in line[2]))
+            log_list.append(f"{os.path.basename(video_files[i])}\n{colorize_matches(line_filter, formatted_text)}")
+            mpv_command.extend([
+                "--{",
+                f"--start={start_time[0]}.{start_time[1]}",
+                f"--end={end_time[0]}.{end_time[1]}",
+                f"--sub-file={ass_files[i]}",
+                f"--title={os.path.basename(video_files[i])}",
+                f"--force-media-title={os.path.basename(video_files[i])}\\N{formatted_text}\\N",
+                video_files[i],
+                "--}",
+            ])
+            at_least_one_line = True
+    if at_least_one_line:
+        try:
+            import colorama
+            colorama.init()
+        except Exception:
+            pass
+        print("\n\n".join(map(lambda x: f"{x[0]}. {x[1]}", enumerate(log_list, start=1))))
+        try:
+            subprocess.call(mpv_command, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except KeyboardInterrupt:
+            pass
+    else:
+        print("No matching lines found")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    formatter = lambda prog: argparse.HelpFormatter(prog, max_help_position=40)
+    parser = argparse.ArgumentParser(description='Find subtitle lines and play them in mpv', formatter_class=formatter)
+    parser.add_argument('-i', '--ignore-case', dest='ignore_case', action='store_true', help='Search lines case-insensitively')
+    parser.add_argument('-k', '--keep-special', dest='keep_special', action='store_true', help='Keep \\N, \\n and \\h while searching')
+    parser.add_argument('-s', '--style', dest='style', metavar='REGEX', type=str, help='Filter lines by style')
+    parser.add_argument('line_regex', metavar='REGEX', help='Search lines with regex')
+    parser.add_argument('files', metavar='ASS_FILE', nargs='*', help='Files to search')
+    args = parser.parse_args()
+    line_filter = re.compile(args.line_regex, re.I if args.ignore_case else 0)
+    if args.style is not None:
+        style_filter = re.compile(args.style)
+    else:
+        style_filter = None
+    main(args.files, line_filter, style_filter, args.keep_special)
