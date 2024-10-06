@@ -11,8 +11,8 @@ local settings = {
   key_movedown = "DOWN",
   key_selectfile = "RIGHT LEFT",
   key_unselectfile = "",
-  key_playfile = "ENTER",
-  key_removefile = "BS",
+  key_playfile = "p KP_ENTER",
+  key_removefile = "DEL",
   key_closeplaylist = "ESC",
 
   --replaces matches on filenames based on extension, put as empty string to not replace anything
