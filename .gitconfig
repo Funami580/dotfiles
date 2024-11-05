@@ -26,10 +26,14 @@
     ca = commit --amend
     cam = commit --amend -m
     can = commit --amend --no-edit
+    cad = commit --amend --date=now
+    camd = commit --amend -m --date=now
+    cand = commit --amend --no-edit --date=now
     co = checkout
     cob = checkout -b
     pf = push --force-with-lease
     rbi = rebase -i
+    rbir = rebase -i --root
     de = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
     des = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits --stat -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
     rank = shortlog -sn --no-merges
