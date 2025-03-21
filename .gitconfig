@@ -9,6 +9,9 @@
 [pull]
     rebase = true
 
+[format]
+  pretty = fuller
+
 [alias]
     a = add
     au = add -u
@@ -26,6 +29,7 @@
     ca = commit --amend
     cam = commit --amend -m
     can = commit --amend --no-edit
+    # Set author date to now
     cad = commit --amend --date=now
     camd = commit --amend -m --date=now
     cand = commit --amend --no-edit --date=now
@@ -34,29 +38,44 @@
     pf = push --force-with-lease
     rbi = rebase -i
     rbir = rebase -i --root
+    rc = rebase --continue
+    # Keep committer and author date while rebasing
+    keepd = "!f() { git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE=\"%cD\" GIT_AUTHOR_DATE=\"%aD\" git commit --amend --no-edit' \"$@\"; }; f"
+    # Additionally keep committer name and committer email
+    keepdne = "!f() { git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE=\"%cD\" GIT_AUTHOR_DATE=\"%aD\" GIT_COMMITTER_NAME=\"%cn\" GIT_COMMITTER_EMAIL=\"%ce\" git commit --amend --no-edit' \"$@\"; }; f"
+    # Exclude files/directories while diffing: git de <ref1> <ref> [exclude...]
     de = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
+    # Instead show diff statistics while excluding files/directories
     des = "!f() { if [[ $1 == *\"..\"* ]]; then commits=\"$1\"; index=2; else commits=\"$1..$2\"; index=3; fi; cmd=\"git diff $commits --stat -- .\"; for i in \"${@:$index}\"; do cmd+=\" ':!$i'\"; done; bash -c \"$cmd\"; }; f"
-    rank = shortlog -sn --no-merges
+    # Short log
     l = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(green)%an %C(reset)%s\"
-    ll = lref
+    # Full log
+    ll = log
+    # With relative dates
     lr = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ar%C(reset) %h %C(green)%an %C(reset)%s\"
+    # With branch references
     lref = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(magenta)%an%C(green)%d%C(reset) %s\"
+    # With relative dates and branch references
     lrref = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %h %C(magenta)%an%C(green)%d%C(reset) %s %C(blue)[%ar]\"
+    # Log with diff
     ld = log -p
+    # Log with changed file stats
     ls = log --stat
-    hist = log --decorate --graph --date=short --pretty=\"format:%C(blue)%ad%C(reset) %C(magenta)%h%C(green)%d%C(reset) %s\"
+    # Plain commits without graph
     cplain = log --pretty=format:\"%h %cr %cn %C(green)%s%C(reset)\"
+    # Changed files for each commit
     cfiles = log --pretty=format:\"%h %cr %cn %C(green)%s%C(reset)\" --name-status
+    # Show only commit messages
     cdesc = log --pretty=format:\" * %s\"
     b = branch --sort=-committerdate --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)'
-    bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
     ba = branch -a
     bc = branch --show-current
     be = switch --orphan
     br = branch -m
     bd = branch -d
-    brecent = !script -efq -O /dev/null -c \"git branch --sort=-HEAD --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | xcol -s "￿"
     bupstream = branch --sort=-upstream --sort=-HEAD --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset) %(if:notequals=)%(upstream)%(then)[%(color:blue)%(upstream:short)%(color:reset)]%(end)'
+    brecent = !script -efq -O /dev/null -c \"git branch --sort=-HEAD --sort=-committerdate --format='%(HEAD) %(if:equals=*)%(HEAD)%(then)%(color:green)%(end)%(refname:short)%(color:reset)￿%(committerdate:relative)￿%(authorname)￿%(objectname:short)￿%(contents:subject)'\" | column -t -s "￿"
+    rank = shortlog -sn --no-merges
     whois = "!bash -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
     root = rev-parse --show-toplevel
 
